@@ -1,8 +1,8 @@
 
 
 const totalSquares = 10;
-const snakes = {8:3}
-const ladders = {2:6};
+const snakes = {5:1, 8:3}
+const ladders = {2:6, 7:9};
 let currentPlayerIdx = 0;
 let end = false;
 
@@ -24,7 +24,7 @@ function rollDice() {
 }
 
 function checkForLadders(playersSquare) {
-    console.log(playersSquare);
+    // console.log(playersSquare);
     if(ladders[playersSquare]) {
         return ladders[playersSquare];
     } else {
@@ -33,7 +33,7 @@ function checkForLadders(playersSquare) {
 }
 
 function checkForSnakes(playersSquare) {
-    console.log(playersSquare);
+    // console.log(playersSquare);
     if(snakes[playersSquare]) {
         return snakes[playersSquare];
     } else {
@@ -63,10 +63,12 @@ function takeTurn(player) {
         
         if(snake) {
             player.currentSquare = snake;
-            console.log("SNAKE");
+            console.log("You landed on a SNAKE!");
+            console.log(`${player.name} is now at ${player.currentSquare}`)
         } else if(ladder) {
             player.currentSquare = ladder;
-            console.log("LADDER")
+            console.log("You landed on a LADDER")
+            console.log(`${player.name} is now at ${player.currentSquare}`)
         } else {
             player.currentSquare = newSquare;
         }
