@@ -23,6 +23,24 @@ function rollDice() {
     return roll;
 }
 
+function checkForLadders(playersSquare) {
+    console.log(playersSquare);
+    if(ladders[playersSquare]) {
+        return ladders[playersSquare];
+    } else {
+        return false;
+    }
+}
+
+function checkForSnakes(playersSquare) {
+    console.log(playersSquare);
+    if(snakes[playersSquare]) {
+        return snakes[playersSquare];
+    } else {
+        return false;
+    }
+}
+
 function checkHasWon(playersSquare) {
     return ((playersSquare >= totalSquares) ? true : false)
 }
@@ -32,17 +50,27 @@ function winner(player) {
 }
 
 function takeTurn(player) {
-    console.log(player);
     roll = rollDice();
     let currentSquare = player.currentSquare;
     let newSquare = currentSquare + roll;
     console.log(`${player.name} moved from ${currentSquare} to ${newSquare}`);
-    console.log(checkHasWon(newSquare));
     if(checkHasWon(newSquare)) {
         end = true;
         winner(player);
     } else {
-        player.currentSquare = newSquare;
+        const snake = checkForSnakes(newSquare);
+        const ladder = checkForLadders(newSquare);
+        
+        if(snake) {
+            player.currentSquare = snake;
+            console.log("SNAKE");
+        } else if(ladder) {
+            player.currentSquare = ladder;
+            console.log("LADDER")
+        } else {
+            player.currentSquare = newSquare;
+        }
+        
     }
 
 }
