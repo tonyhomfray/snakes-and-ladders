@@ -1,0 +1,73 @@
+main {
+    display: flex;
+    justify-content: center;
+
+}
+
+
+#gameboard {
+    background-color: black;
+    border: solid black 4px;
+    border-radius: 4px;
+    display: flex;
+    flex-direction: column;
+    /* grid-template-columns: repeat(10, auto); */
+    gap: 1px;
+    place-content: center;
+    /* padding: 0; */
+    margin: 0 100px;
+}
+
+.row {
+    display: flex;
+    flex-direction: row-reverse;
+}
+
+.row:nth-child(even) {
+    flex-direction: row;
+}
+
+
+.square {
+    background-color: aliceblue;
+    color: black;
+    border: solid black 1px;
+    padding: 3px;
+    height: 7.5vh;
+    width: 7.5vh;
+}
+
+.square:nth-child(odd) {
+    background-color: yellow;
+}
+
+.square:nth-child(even) {
+    background-color: lightgreen;
+}
+
+/* span.yellow {
+    background-color: yellow;
+}
+
+span.green {
+    background-color: lightgreen;
+} */
+
+
+
+#left-panel, #right-panel {
+    background-color: lightgrey;
+    border: solid black 4px;
+    border-radius: 4px;
+    padding: 1.5em;
+}
+
+#left-panel {
+    
+}
+
+#right-panel {
+
+}
+
+
