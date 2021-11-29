@@ -1,10 +1,10 @@
 
 
-const totalSquares = 10;
+const TOTAL_SQUARES = 10;
 const snakes = {5:1, 8:3}
 const ladders = {2:6, 7:9};
 let currentPlayerIdx = 0;
-let end = false;
+// let end = false;
 
 const player1 = {
     "name": "Tony",
@@ -16,7 +16,12 @@ const player2 = {
     "currentSquare": 0
 }
 
-const players = [player1, player2];
+const player3 = {
+    "name": "Angela",
+    "currentSquare": 0
+}
+
+const players = [player1, player2, player3];
 
 function rollDice() {
     const roll = (Math.floor(Math.random() *6)) +1;
@@ -24,7 +29,6 @@ function rollDice() {
 }
 
 function checkForLadders(playersSquare) {
-    // console.log(playersSquare);
     if(ladders[playersSquare]) {
         return ladders[playersSquare];
     } else {
@@ -33,7 +37,6 @@ function checkForLadders(playersSquare) {
 }
 
 function checkForSnakes(playersSquare) {
-    // console.log(playersSquare);
     if(snakes[playersSquare]) {
         return snakes[playersSquare];
     } else {
@@ -42,21 +45,65 @@ function checkForSnakes(playersSquare) {
 }
 
 function checkHasWon(playersSquare) {
-    return ((playersSquare >= totalSquares) ? true : false)
+    return ((playersSquare >= TOTAL_SQUARES) ? true : false)
 }
 
-function winner(player) {
-    console.log(`${player.name} has won`);
+// function winner(player) {
+//     console.log(`${player.name} has won`);
+// }
+
+function displayMove(player, oldPosition, newPosition) {
+    let p = document.createElement('p');
+    let text = document.createTextNode(`${player} moved from ${oldPosition} to ${newPosition}`);
+    p.appendChild(text);
+    const list = document.getElementById('right-panel');
+    list.appendChild(p);
 }
 
-function takeTurn(player) {
+function displaySnake(name, square) {
+    let snakeElem = document.createElement('p');
+    let snakeText = document.createTextNode("SNAKE!!!");
+    snakeElem.appendChild(snakeText);
+    
+    let playerElem = document.createElement('p');
+    let playerText = document.createTextNode(`${name} went back to square ${square}`);
+    playerElem.appendChild(playerText);
+
+    const list = document.getElementById('right-panel');
+    list.appendChild(snakeElem);
+    list.appendChild(playerElem);
+}
+
+function displayLadder(name, square) {
+    let ladderElem = document.createElement('p');
+    let ladderText = document.createTextNode("LADDER!!!");
+    ladderElem.appendChild(ladderText);
+    
+    let playerElem = document.createElement('p');
+    let playerText = document.createTextNode(`${name} moved up to square ${square}`);
+    playerElem.appendChild(playerText);
+
+    const list = document.getElementById('right-panel');
+    list.appendChild(ladderElem);
+    list.appendChild(playerElem);
+}
+
+function takeTurn() {
+    let player = players[currentPlayerIdx];
     roll = rollDice();
     let currentSquare = player.currentSquare;
-    let newSquare = currentSquare + roll;
+    let newSquare;
+    if (currentSquare + roll > TOTAL_SQUARES) {
+        newSquare = TOTAL_SQUARES;
+    } else {
+        newSquare = currentSquare + roll;
+    }
     console.log(`${player.name} moved from ${currentSquare} to ${newSquare}`);
+    displayMove(player.name, currentSquare, newSquare);
     if(checkHasWon(newSquare)) {
-        end = true;
-        winner(player);
+        // end = true;
+        player.currentSquare = TOTAL_SQUARES;
+        endGame(player);
     } else {
         const snake = checkForSnakes(newSquare);
         const ladder = checkForLadders(newSquare);
@@ -65,15 +112,21 @@ function takeTurn(player) {
             player.currentSquare = snake;
             console.log("You landed on a SNAKE!");
             console.log(`${player.name} is now at ${player.currentSquare}`)
+            displaySnake(player.name, player.currentSquare);
+            // displayMove(player.name, newSquare, player.currentSquare);
         } else if(ladder) {
             player.currentSquare = ladder;
             console.log("You landed on a LADDER")
             console.log(`${player.name} is now at ${player.currentSquare}`)
+            displayLadder(player.name, player.currentSquare);
+            // displayMove(player.name, newSquare, player.currentSquare);
         } else {
             player.currentSquare = newSquare;
         }
         
     }
+
+    player = getNextPlayer();
 
 }
 
@@ -86,13 +139,42 @@ function getNextPlayer() {
     return (players[currentPlayerIdx]);
 }
 
-function gameLoop() {
-    let player = players[0];
-    while(end === false) {
-        takeTurn(player);
-        player = getNextPlayer();
-    }
+
+
+function endGame(player) {
+    console.log(`${player.name} has won`);
+
     console.log("!!!GAME OVER!!!")
+
+    let winnerElem = document.createElement('p');
+    let winnerText = document.createTextNode(`${player.name} has won!`);
+    winnerElem.appendChild(winnerText);
+
+    let gameOverElem = document.createElement('p');
+    let gameOverText = document.createTextNode(`!!!GAME OVER!!!`);
+    gameOverElem.appendChild(gameOverText);
+
+    const list = document.getElementById('right-panel');
+    list.appendChild(winnerElem);
+    list.appendChild(gameOverElem);
+
+}
+
+function startGame() {
+    const startButton = document.getElementById("startGame");
+    startButton.setAttribute("disabled", "");
+    const takeTurnButton = document.getElementById("takeTurn");
+    takeTurnButton.removeAttribute("disabled");
+
+    let player = players[0];
+    takeTurn();
+
+
+    // while(end === false) {
+    //     takeTurn(player);
+    //     player = getNextPlayer();
+    // }
+    
 }
 
 // takeTurn(player1);

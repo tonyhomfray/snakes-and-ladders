@@ -60,6 +60,7 @@ span.green {
     border: solid black 4px;
     border-radius: 4px;
     padding: 1.5em;
+    width: 15%;
 }
 
 #left-panel {
