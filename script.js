@@ -1,8 +1,8 @@
 
 
-const TOTAL_SQUARES = 10;
-const snakes = {5:1, 8:3}
-const ladders = {2:6, 7:9};
+const TOTAL_SQUARES = 100;
+const snakes = {16:6, 47:26, 49:11, 56:53, 64:60, 87:24, 93:73, 95:75, 98:78}
+const ladders = {2:38, 4:14, 8:31, 21:39, 28:84, 36:44, 51:67, 71:91, 80:10};
 let currentPlayerIdx = 0;
 // let end = false;
 
