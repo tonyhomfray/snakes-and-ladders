@@ -12,12 +12,12 @@ const player1 = {
 }
 
 const player2 = {
-    "name": "Beth",
+    "name": "Player2-Name",
     "currentSquare": 0
 }
 
 const player3 = {
-    "name": "Angela",
+    "name": "Player3-Name",
     "currentSquare": 0
 }
 
